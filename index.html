@@ -1,0 +1,220 @@
+<html>
+<head>
+  <style>
+    h1 {
+      text-align: center;
+      color: darkcyan;
+    }
+
+    table {
+      text-align: center;
+      border: 1px solid;
+      border-collapse: collapse;
+      border-color: black;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    th, td {
+      text-align: center;
+      border: 1px solid;
+      border-collapse: collapse;
+      border-color: black;
+      width: 100px;
+      height: 30px;
+      background-color: lightblue;
+    }
+
+    td {
+      color: darkgreen;
+      position: relative;
+    }
+
+    th {
+      color: black;
+      position: relative;
+    }
+
+    h2 {
+      color: darkgreen;
+    }
+
+    .text {
+      font-size: 16px;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    .infoBox {
+      visibility: hidden;
+      color: black;
+      opacity: 0;
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px;
+      background-color: lightgray;
+      border: 1px solid black;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      z-index: 10;
+      width: 80px;
+    }
+
+    .benefice {
+      text-align: center;
+      color: darkgreen;
+    }
+
+    .tdBen {
+      background-color: lightgreen;
+    }
+
+    .prixBox {
+      visibility: hidden;
+      color: black;
+      opacity: 0;
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px;
+      background-color: lightgray;
+      border: 1px solid black;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      z-index: 10;
+      width: 80px;
+    }
+
+    td:hover .infoBox {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    th:hover .prixBox {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Provision</h1>
+
+  <table>
+    <tr>
+      <th>
+        <p>Bread</p>
+        <div class="prixBox">1.20CHF/10</div>
+      </th>
+      <th>
+        <p>Choc</p>
+        <div class="prixBox">2.35CHF/20</div>
+      </th>
+      <th>
+        <p>Ice tea</p>
+        <div class="prixBox">2.80CHF/6</div>
+      </th>
+      <th class="tdBen">
+        <b class="benefice">Benefice</b>
+      </th>
+    </tr>
+    <tr>
+      <td>
+        <b><h2 class="text">10</h2></b>
+        <div class="infoBox">1/récré</div>
+      </td>
+      <td>
+        <b><p class="text">25</p></b>
+        <div class="infoBox">15/récré</div>
+      </td>
+      <td>
+        <b class="text">0</b>
+        <div class="infoBox">5/récré</div>
+      </td>
+      <td class="tdBen">
+        <div class="benefice" id="benef"></div>
+      </td>
+    </tr>
+  </table>
+
+  <script>
+    const cell = document.querySelectorAll('td b');
+
+    cell.forEach(cell => {
+      const value = parseInt(cell.innerText);
+
+      if (value < 5) {
+        cell.style.color = 'darkred';
+      }
+    });
+
+
+    const cells = document.querySelectorAll('td b p');
+
+    cells.forEach(cell => {
+      const value = parseInt(cell.innerText);
+
+      if (value < 15) {
+        cell.style.color = 'darkred';
+      }
+    });
+    const cellu = document.querySelectorAll('td b h2');
+
+    cellu.forEach(cel => {
+      const val = parseInt(cel.innerText);
+
+      if (val == 0) {
+        cel.style.color = 'darkred';
+      }
+    });
+
+    const breadPrice = 1.20;
+    const chocPrice = 2.35; 
+    const iceteaPrice = 2.80;
+
+    const reventBread = 0.25;
+    const reventChoc = 0.25;
+    const reventIcetea = 0.50;
+
+    const breadQuantity = parseInt(document.querySelector('td b h2').innerText); 
+    const chocQuantity = parseInt(document.querySelectorAll('td b p')[0].innerText); 
+    const iceteaQuantity = parseInt(document.querySelectorAll('td b')[2].innerText); 
+
+    const beneficeBread = breadQuantity*reventBread-breadPrice;
+    const beneficeChoc = chocQuantity*reventChoc-chocPrice;
+    const beneficeIcetea = iceteaQuantity*reventIcetea-iceteaPrice
+
+    let tot_benefice = 0;
+
+    if (breadQuantity != 0) {
+      tot_benefice += beneficeBread;
+    };
+
+    if (chocQuantity != 0) {
+      tot_benefice += beneficeChoc;
+    };
+
+    if (iceteaQuantity != 0) {
+      tot_benefice += beneficeIcetea;
+    };
+
+    if (tot_benefice <= 0) {
+      const classBenefice = document.getElementsByClassName('benefice');
+      for (let i = 0; i < classBenefice.length; i++) {
+        classBenefice[i].style.color = "darkred";
+      }
+      const classTbBen = document.querySelectorAll('.tdBen');
+      classTbBen.forEach(element =>{
+        element.style.backgroundColor = 'lightsalmon';
+      });
+    };
+
+    document.getElementById('benef').innerText = tot_benefice.toFixed(2) + " CHF";
+
+
+  </script>
+
+</body>
+</html>
